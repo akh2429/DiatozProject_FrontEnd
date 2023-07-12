@@ -6,12 +6,13 @@ import { GiHamburgerMenu } from 'react-icons/gi';
 import { RiLogoutBoxLine } from 'react-icons/ri';
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux'
+
 
 function Navbar() {
 
     const [isOpen, setIsOpen] = useState(false);
-    const Navigate = useNavigate();
-
+    const cart = useSelector(state => state.cart);
     return (
         <nav className="  flex gap-4 justify-around bg-yellow-400 p-5 text-4xl font-extrabold shadow-md 
         border-white-600 rounded-sm lg:text-2xl md:text-lg md:p-3 sm:text-sm sm:p-3 items-center vsm:text-sm flex-nowrap text-shadow vsm:gap-0 vsm:p-2  ">
@@ -34,6 +35,7 @@ function Navbar() {
                 <div>
                     <Link to={"/cart"} className="flex gap-1 " >
                         <GiShoppingCart className="text-slate-100 text-4xl shadow-md border border-white rounded lg:text-2xl md:text-xl " />
+                        <div className="text-sm border rounded-full h-max text-white p-1 bg-red-600">{cart && cart.length}</div>
                         CART
                     </Link>
                 </div>
