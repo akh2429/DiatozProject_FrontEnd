@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
 
 export const products = createSlice({
     name: "Tshirts",
@@ -25,13 +26,12 @@ export const products = createSlice({
 export const fetchProducts = createAsyncThunk(
     "fetchProducts",
     async (_, { rejectWithValue }) => {
-        const response = await fetch(
-            "https://geektrust.s3.ap-southeast-1.amazonaws.com/coding-problems/shopping-cart/catalogue.json"
-        );
         try {
-            const result = await response.json();
-            return result;
-        } catch (error) {
+            const response = await axios.get("https://geektrust.s3.ap-southeast-1.amazonaws.com/coding-problems/shopping-cart/catalogue.json");
+            const products = response.data.map((prod) => ({ ...prod, cart: [] }));
+            return products;
+        }
+        catch (error) {
             return rejectWithValue(error);
         }
     }

@@ -31,11 +31,11 @@ const Footer = () => {
                             </h2>
                             <p
                                 className="text-gray-400">
-                                Email: info@example.com
+                                Email: akhileshibi@gmail.com
                             </p>
                             <p
                                 className="text-gray-400">
-                                Phone: +1 123-456-7890
+                                Phone: 9752464362
                             </p>
                         </div>
                     </div>
