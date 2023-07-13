@@ -6,6 +6,7 @@ import { BsCurrencyRupee } from 'react-icons/bs';
 import { add2Cart } from '../../Redux/cartSlice'
 
 export default function LandingPage() {
+    const mobilemenu = useSelector(state => state.mobileFilter);
     const dispatch = useDispatch();
     const { products, loading } = useSelector((state) => state.products);
 
@@ -27,11 +28,11 @@ export default function LandingPage() {
                 className='flex justify-center items-cente w-full h-full' >
                 <Filters />
                 <div
-                    className='flex w-full gap-3 shadow-md flex-wrap items-center justify-center p-2 ' >
+                    className={mobilemenu ? "hidden" : 'flex w-full gap-3 shadow-md flex-wrap items-center justify-center p-2 '} >
                     {products.map((product, index) => (
                         <div
                             key={index}
-                            className=" flex flex-col w-72 rounded-b-3xl p-1 items-center overflow-hidden flex-nowrap border-2 shadow-sm border-gray-950 border-solid gap-2"  >
+                            className=" flex flex-col w-72 md:w-52 sm:w-44 rounded-b-3xl p-1 items-center overflow-hidden flex-nowrap border-2 shadow-sm border-gray-950 border-solid gap-2"  >
                             <img
                                 src={product.imageURL}
                                 className='top-0 left-0 h-full w-full object-cover z-0' />

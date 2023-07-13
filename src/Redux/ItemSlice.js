@@ -8,6 +8,10 @@ export const products = createSlice({
         loading: false,
         error: null
     },
+    reducers: {
+
+    },
+
     extraReducers: (builder) => {
         builder.addCase(fetchProducts.pending, (state) => {
             state.loading = true;

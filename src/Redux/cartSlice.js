@@ -1,5 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
-import Swal from "sweetalert2";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const cart = createSlice({
     name: "cart",
@@ -11,9 +13,9 @@ const cart = createSlice({
             const check = state.find((val) => val.id === item.id);
             if (!check) {
                 state.push(addCartQuantity);
-                Swal.fire({ title: 'Success', text: `Item Added to the cart`, icon: 'success' });
+                toast.success('Item Added to the cart');
             } else {
-                Swal.fire({ title: 'Error', text: `Item Already exist in the cart`, icon: 'error' });
+                toast.error('Item Already exist in the cart');
             }
         },
         increaseQuantity: (state, action) => {
@@ -22,7 +24,7 @@ const cart = createSlice({
             if (item.cartQuantity < item.quantity) {
                 item.cartQuantity += 1;
             } else {
-                Swal.fire({ title: 'Error', text: `Only ${item.quantity} quantities you can order`, icon: 'error' });
+                toast.error(`Only ${item.quantity} quantities you can order`);
                 return
             }
         },
@@ -33,7 +35,9 @@ const cart = createSlice({
                 if (item.cartQuantity > 1) {
                     item.cartQuantity -= 1;
                 } else {
-                    Swal.fire({ title: 'Error', text: "Quantity can't be decreased less than 1, Please click on delete item if you want to Remove item from Cart", icon: 'error' });
+                    toast.error(
+                        "Quantity can't be decreased less than 1, Please click on delete item if you want to Remove item from Cart"
+                    );
                 }
             }
         },
@@ -42,6 +46,7 @@ const cart = createSlice({
             const item = state.find((val) => val.id === id);
             if (item) {
                 state.splice(state.indexOf(item), 1);
+                toast.success('Item deleted from the cart');
             }
         },
     },
