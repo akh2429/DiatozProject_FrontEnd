@@ -3,7 +3,7 @@ import LandingPage from './Pages/LandingPage/LandingPage';
 import CartPage from './Pages/CartPage/CartPage';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import store from './Redux/store';
+import store from './Redux/Reduxstore';
 import Navbar from './Components/Navbar/Navbar';
 import Footer from './Components/Footer/Footer';
 import { ToastContainer } from 'react-toastify';
