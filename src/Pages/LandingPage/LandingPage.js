@@ -88,6 +88,7 @@ export default function LandingPage() {
                             key={index}
                             className=" flex flex-col w-72 md:w-52 sm:w-44 rounded-b-3xl p-1 items-center overflow-hidden flex-nowrap border-2 shadow-sm border-gray-950 border-solid gap-2"  >
                             <img
+                                alt='Image LoaDing'
                                 src={product.imageURL}
                                 className='top-0 left-0 h-full w-full object-cover z-0' />
                             <div

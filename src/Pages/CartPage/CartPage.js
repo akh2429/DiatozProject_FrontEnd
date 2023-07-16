@@ -35,7 +35,8 @@ export default function CartPage() {
                                 <div
                                     className='h-full'>
                                     <img
-                                        alt='Not Available' src={val.imageURL}
+                                        alt='Not Available'
+                                        src={val.imageURL}
                                         className='w-full h-full object-contain' />
                                 </div>
                                 <div>{val.name}</div>
