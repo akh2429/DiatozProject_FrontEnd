@@ -17,7 +17,6 @@ function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
     const navigate = useNavigate();
 
-
     const user = useMemo(() => {
         const JWtoken = JSON.parse(localStorage.getItem("userToken"));
         if (JWtoken) {
@@ -26,8 +25,6 @@ function Navbar() {
         }
     }, [navigate]);
 
-
-
     function logoutHandler() {
         if (user) {
             localStorage.removeItem("userToken")
@@ -35,7 +32,6 @@ function Navbar() {
             toast.success("Logged out SucessFully")
         }
     }
-
 
     return (
         <nav
