@@ -17,7 +17,7 @@ const Footer = () => {
                                 About Us
                             </h2>
                             <p
-                                className="text-gray-400">Hi... We Sell T-Shirts here WELCOME!
+                                className="text-gray-400">Hi...You will get some best wallpapers here!! Welome
                             </p>
                         </div>
                     </div>
@@ -72,7 +72,7 @@ const Footer = () => {
                     className="border-gray-700 my-6" />
                 <div
                     className="text-center text-gray-400">
-                    &copy; {new Date().getFullYear()} TeeRex. All rights reserved.
+                    &copy; {new Date().getFullYear()} InviCia. All rights reserved.
                 </div>
             </div>
         </footer>

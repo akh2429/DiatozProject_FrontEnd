@@ -1,17 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import products from './ProductsSlice';
-import cart from './cartSlice';
-import mobileFilter from './MobileFilterSlice';
-import checkboxFilters from './checkboxFiltersSlice';
-import navBarSearch from "../Redux/navbarSearchSlice"
+import signUpSlice from "./signupSlice"
+import loginSlice from "./loginSlice"
 
 const store = configureStore({
     reducer: {
         products: products,
-        cart: cart,
-        mobileFilter: mobileFilter,
-        checkboxFilters: checkboxFilters,
-        navBarSearch: navBarSearch
+        signUpSlice: signUpSlice,
+        loginSlice: loginSlice
     },
 });
 export default store;

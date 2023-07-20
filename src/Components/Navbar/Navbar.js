@@ -1,25 +1,40 @@
 import { Link } from "react-router-dom";
-import { GiShoppingCart } from 'react-icons/gi';
-import { AiOutlineFileSearch } from 'react-icons/ai';
+import { AiOutlineLogout } from 'react-icons/ai';
 import { GiHamburgerMenu } from 'react-icons/gi';
-import { FaFilter } from 'react-icons/fa';
-import { useState } from "react";
+import { MdOutlineFavorite } from 'react-icons/md';
+import { BiHome, BiSolidLogInCircle, BiLogOut } from 'react-icons/bi';
+import { HiLogin } from 'react-icons/hi';
+import { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux'
-import { menuOpen } from "../../Redux/MobileFilterSlice";
-import { navbarsearchQuery } from "../../Redux/navbarSearchSlice";
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { loginSlice } from "../../Redux/loginSlice";
+import jwtDecode from "jwt-decode";
 
 function Navbar() {
-    const dispatch = useDispatch();
+    const loginState = useSelector((state) => state.loginSlice);
+    console.log(loginState)
     const [isOpen, setIsOpen] = useState(false);
-    const cart = useSelector(state => state.cart);
-    const searchQuery = useSelector(state => state.navBarSearch);
+    const navigate = useNavigate();
 
 
-    function searchQueryChangeHandler(e) {
-        const { value } = e.target;
-        dispatch(navbarsearchQuery(value));
+    const user = useMemo(() => {
+        const JWtoken = JSON.parse(localStorage.getItem("userToken"));
+        if (JWtoken) {
+            const decoded = jwtDecode(JWtoken.token);
+            return decoded
+        }
+    }, [navigate]);
+
+
+
+    function logoutHandler() {
+        if (user) {
+            localStorage.removeItem("userToken")
+            navigate("/");
+            toast.success("Logged out SucessFully")
+        }
     }
-
 
 
     return (
@@ -31,40 +46,47 @@ function Navbar() {
                 <Link
                     to="/"
                     className=" font-bold text-red-600 shadow-md rounded-br-3xl border-2 border-white rounded-md p-2 sm:text-sm  vsm:text-xs  ">
-                    Tee-Rex
+                    InviCia
                 </Link>
             </div>
 
-            {/* Search  */}
+            {/* Navigation  */}
             <div
                 className="flex gap-1 " >
-                <AiOutlineFileSearch
-                    className="text-slate-100  text-4xl shadow-md border border-white rounded lg:text-2xl md:text-xl sm:text-2xl vsm:text-lg " />
-                <input
-                    value={searchQuery}
-                    onChange={searchQueryChangeHandler}
-                    className="h-10 shadow-inner	rounded text-center border border-white lg:text-3xl lg:h-8 lg:w-80 md:text-xl md:h-6 md:w-56 sm:h-6 vsm:h-5 vsm:w-24 vsm:text-xs" placeholder="Search here..." />
+                <div
+                    className="  rounded text-center  lg:text-3xl lg:h-8 lg:w-80 md:text-xl md:h-6 md:w-56 sm:h-6 sm:hidden vsm:hidden vsm:h-5 vsm:w-24 vsm:text-xs gap-6 flex  " >
+                    <Link
+                        to={"/landingPage"}
+                        className=" flex justify-center items-center border p-2 shadow-md rounded-md" >
+                        <BiHome className="text-green-600" />
+                        HOME
+                    </Link>
+                    <Link
+                        to={"/favourite"}
+                        className=" flex justify-center items-center border p-2 shadow-md rounded-md" >
+                        <MdOutlineFavorite className="text-red-600" />
+                        FAVORITES
+                    </Link>
+                </div>
             </div>
-            <button
-                className="md:hidden lg:hidden xl:hidden"
-                onClick={() => dispatch(menuOpen())} >
-                <FaFilter />
-            </button>
-            {/*  Cart */}
+            {/*  Logout */}
             <div
                 className="flex gap-6 sm:hidden xs:hidden vsm:hidden "   >
                 <div>
-                    <Link
-                        to={"/cart"}
+                    <button
+                        onClick={logoutHandler}
                         className="flex gap-1 " >
-                        <GiShoppingCart
-                            className="text-slate-100 text-4xl shadow-md border border-white rounded lg:text-2xl md:text-xl " />
-                        <div
-                            className="text-sm font-thin border rounded-e-3xl h-max text-white p-1 bg-green-800">
-                            {cart && cart.length}
+
+                        {user ? <AiOutlineLogout
+                            className="text-red-600 text-4xl shadow-md border border-white rounded lg:text-2xl md:text-xl " /> :
+                            <HiLogin
+                                className="text-red-600 text-4xl shadow-md border border-white rounded lg:text-2xl md:text-xl " />}
+
+                        <div className="flex flex-col" >
+                            {user ? `LOGOUT` : "LOGIN"}
+                            <div className="text-xs text-green-900" >{user ? `Hii...${user.name.split(" ")[0]}` : null}</div>
                         </div>
-                        CART
-                    </Link>
+                    </button>
                 </div>
             </div>
 
@@ -73,24 +95,37 @@ function Navbar() {
                 className="relative md:hidden lg:hidden xl:hidden hover:text-xl" >
                 <button
                     className={isOpen ? "text-green-600" : "text-red-600"}
-                    onClick={() => setIsOpen(!isOpen)} ><GiHamburgerMenu /></button>
+                    onClick={() => setIsOpen(!isOpen)} >
+                    <GiHamburgerMenu />
+                </button>
             </div>
 
             {/* Mobile Menu */}
             <div
                 className={isOpen ? " z-30 flex flex-col justify-center items-center gap-7  absolute right-0  h-64 w-screen top-11 bg-yellow-400" : "hidden"}>
-                <div>
+                <div className="flex flex-col items-center justify-center gap-3" >
                     <Link
-                        to={"/cart"}
-                        className="flex gap-1 border-4 p-4 border-red-600 rounded-s-full shadow-xl " >
-                        <GiShoppingCart
-                            className="text-slate-100 text-4xl shadow-md border border-white rounded " />
-                        <div
-                            className="text-sm font-thin border rounded-e-3xl h-max text-white p-1 bg-green-800">
-                            {cart && cart.length}
-                        </div>
-                        CART
+                        to={"/landingPage"}
+                        className=" flex justify-center items-center border p-2 shadow-md rounded-md" >
+                        <BiHome className="text-green-600" />
+                        HOME
                     </Link>
+                    <Link
+                        to={"/favourite"}
+                        className=" flex justify-center items-center border p-2 shadow-md rounded-md" >
+                        <MdOutlineFavorite className="text-red-600" />
+                        FAVOURITES
+                    </Link>
+                    <button
+                        onClick={logoutHandler}
+                        className="flex gap-1 " >
+                        <AiOutlineLogout
+                            className="text-slate-100 text-lg shadow-md border border-white rounded lg:text-2xl md:text-xl " />
+                        <div className="flex flex-col" >
+                            {user ? `LOGOUT` : "LOGIN"}
+                            <div className="text-xs text-green-900" >{user ? `Hii...${user.name.split(" ")[0]}` : null}</div>
+                        </div>
+                    </button>
                 </div>
             </div>
         </nav >
