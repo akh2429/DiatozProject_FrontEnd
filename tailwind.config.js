@@ -1,5 +1,9 @@
-/** @type {import('tailwindcss').Config} */
 module.exports = {
+  variants: {
+    extend: {
+      visibility: ['group-hover'],
+    },
+  },
   content: ["./src/**/*.{html,js}"],
   theme: {
     screens: {
@@ -14,4 +18,4 @@ module.exports = {
     },
   },
   plugins: [],
-}
+};

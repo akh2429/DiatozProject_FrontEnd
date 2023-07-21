@@ -13,7 +13,6 @@ import jwtDecode from "jwt-decode";
 
 function Navbar() {
     const loginState = useSelector((state) => state.loginSlice);
-    console.log(loginState)
     const [isOpen, setIsOpen] = useState(false);
     const navigate = useNavigate();
 
