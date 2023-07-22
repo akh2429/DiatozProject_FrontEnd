@@ -11,6 +11,7 @@ export default function LandingPage() {
     const navigate = useNavigate();
     const [currentPage, setCurrentPage] = useState(0);
     const [recivedData, setRecivedData] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     const userId = useMemo(() => {
         const JWtoken = JSON.parse(localStorage.getItem("userToken"));
@@ -32,12 +33,15 @@ export default function LandingPage() {
     useEffect(() => {
         async function fetchData() {
             try {
+                setLoading(true);
                 const response = await axios.get(`http://localhost:5050/images?page=${currentPage}`);
                 setRecivedData([...recivedData, ...response.data.products]);
             } catch (error) {
                 if (error) {
                     toast.error(`${error.response.data}`);
                 }
+            } finally {
+                setLoading(false);
             }
         }
         fetchData();
@@ -66,7 +70,7 @@ export default function LandingPage() {
     };
 
     function setDownload(id) {
-
+        toast.error(`Download Functionality not available`);
     };
 
     return (
@@ -117,6 +121,7 @@ export default function LandingPage() {
                     </div>
                 </div>
             ))}
+            {loading ? <div className=' text-black font-semibold bg-yellow-400 rounded-md p-2 border-2 border-black' >Relax Loading Data</div> : null}
             <button
                 className=' text-black font-semibold bg-yellow-400 rounded-md p-2 border-2 border-black'
                 onClick={loadMoreShots}>
