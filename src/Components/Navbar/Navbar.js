@@ -24,6 +24,8 @@ function Navbar() {
         }
     }, [navigate]);
 
+    console.log(user);
+
     function logoutHandler() {
         if (user) {
             localStorage.removeItem("userToken")
